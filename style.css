@@ -1,0 +1,101 @@
+html {
+    font-size: 10px;
+    text-align: center;
+    color: black;
+}
+body{ 
+    background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), 
+                url("background-landscape.jfif");
+    font-family : Arial, sans-serif; 
+    background-size: cover; /* Makes the image cover the entire background */
+    }
+
+a {
+    font-family: Arial, sans-serif; /* Specify font family */
+    font-size: 2rem; /* Specify font size */
+    text-decoration: none; /* Remove underline */
+    margin: 0 10px
+}
+
+h1, h2, h3{ 
+    background-color : transparent; 
+    font-size: 4rem;
+}
+
+p[enlarged-text]{ 
+    font-size: 2rem;
+}
+
+.container{
+    background-color: yellow; 
+    border: 2x solid black;
+    background-color: transparent;
+    margin-left : auto; 
+    margin-right : auto;
+    height: auto;
+    overflow: auto;
+}
+
+.header{
+    padding: 10px;
+}
+
+.navbar{
+padding: 10px;
+border: 2x solid black;
+}
+
+.article{
+    padding: 10px;
+    width: 660px;
+    height: 300px;
+    border: 2x solid black;
+    float: left;
+}
+
+.ad-sidebar{
+    width: 300px;
+    height: 300px;
+    border: 2x solid black;
+    float: left;
+}
+
+.footer{
+    padding: 10px;
+    border: 2x solid black;
+    margin-top: auto; /* Pushes the footer to the bottom */
+}
+
+.button{
+    background-color: rgb(229, 230, 215);
+    color: black;
+    border: 5px solid black;
+    margin: 5px;
+    padding:10px;
+    display: inline-block; /* Ensure it wraps tightly around the text */
+    cursor: pointer; /* Optional: Change cursor to pointer when hovering */
+    text-align: center; /* Optional: Center the text inside */
+    }
+          
+.favourite{
+    background-color: rgb(50, 60, 205);
+    color: white;
+    border: 2px solid black;
+    margin: 20px;
+    padding:10px;
+    }
+
+.examplekokosus  {                           /* SELEKTOR - odstavec */
+    background:#b0fbc1;
+    text-align:center;
+    color:#000;
+    border:5px solid #000;     /* Rámeček šířka typ barva */
+    margin:10px 100px 10px 100px;
+    padding:30px;              /* Vnitřní okraj */
+    font-size:3rem
+}
+
+#motto {
+    background-color : yellow; 
+    color : blue;
+}
