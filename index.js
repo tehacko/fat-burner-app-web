@@ -7,29 +7,25 @@ const port = 3000;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
+let heading;
+
 app.get("/", (req, res) => {
-  res.render("index.ejs")
+  res.render("index.ejs", {confirmRegistration: heading});
 });
 
 app.get("/loggedinpage", (req, res) => {
   res.render("loggedinpage.ejs")
 });
 
+app.get("/register", (req, res) => {
+  res.render("register.ejs")
+});
 
 app.post("/submit", (req, res) => {
-  // const numLetters = req.body["fName"].length + 
-  //   req.body["lName"].length;
-  //   console.log(numLetters);
-  //   res.render("index.ejs", {
-  //     numberOfLetters: numLetters
-  // //   {name: req.body["fName"]
-  // });
-  // if (locals.req.body["fName"]) {
-  //   var heading = "What is your name?";
-  // } else {
-  //   var heading = req.body["fName"].length;
-  // }
-  // console.log(heading);
+  console.log(req.body);
+  const username = req.body["username"];
+  heading = `Thank you for your desire to register, ${username}!`;
+  res.redirect("/");
 });
 
 app.listen(port, () => {

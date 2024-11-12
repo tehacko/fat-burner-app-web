@@ -8,11 +8,12 @@
         </div>
     </div>
     <div class="button">
-        <a href= "/"> Register </a>
+        <a href= "/register"> Register </a>
     </div>
-    <p></p>
-    <p></p>
-    <p></p>
+    <br><br><br>
+    <% if (locals.confirmRegistration) { %>
+        <h2><%= confirmRegistration %></h2>
+    <% } %>
     <a href = "https://www.facebook.com/juranekstepan/">
         <img src="images/schema_black.png">
 </div>

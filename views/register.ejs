@@ -1,0 +1,40 @@
+<%- include("partials/header.ejs") %>
+
+<h1>Register a User<h1>
+
+<form action="/submit" method="POST">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required><br><br>
+
+
+    <label for="sex">Sex:</label>
+    <select id="sex" name="sex" required>
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+    </select><br><br>
+
+    <label for="height">Height:</label>
+    <input type="range" id="height" name="height" min="120" max="250" step="1" required> 
+    <span id="heightValue">185</span> cm<br><br>
+
+    <label for="birthdate">Birthdate:</label>
+    <input type="date" id="birthdate" name="birthdate" required><br><br>
+
+
+    <input type="submit" value="Register" />
+</form>
+
+<script> 
+const heightSlider = document.getElementById('height'); 
+const heightValue = document.getElementById('heightValue');
+heightSlider.addEventListener('input', function() {
+    heightValue.textContent = heightSlider.value; 
+}); 
+</script>
+
+
+<% if (locals.confirmRegistration) { %>
+    <h2><%= confirmRegistration %></h2>
+<% } %>
+
+<%- include("partials/footer.ejs") %>
