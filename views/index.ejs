@@ -3,8 +3,14 @@
 <div class="container">
     <div class="header">
         <h1>Fat Burner</h1>
-        <div class="button">
-            <a href= "/loggedinpage"> Choose User </a>
+        <!-- Drop Down Widget -->
+        <div class="dropdown">
+            <select id="userSelect" name="userId" onchange="navigateToUserPage()" required>
+                <option value="" disabled selected>Choose User</option>
+                <% userData.forEach(user => { %>
+                    <option value="/loggedinpage?userId=<%= user.id %>"><%= user.userName %></option>
+                <% }) %>
+            </select>
         </div>
     </div>
     <div class="button">
@@ -17,5 +23,23 @@
     <a href = "https://www.facebook.com/juranekstepan/">
         <img src="images/schema_black.png">
 </div>
+
+<script>
+    // Function to reset the dropdown on page load or back navigation
+    window.addEventListener("pageshow", function () {
+        const selectElement = document.getElementById("userSelect");
+        selectElement.selectedIndex = 0; // Reset to the first option ("Choose User")
+    });
+
+    // Function to handle dropdown navigation
+    function navigateToUserPage() {
+        const selectElement = document.getElementById("userSelect");
+        const selectedValue = selectElement.value;
+
+        if (selectedValue) {
+            window.location.href = selectedValue; // Redirect to the selected user's page
+        }
+    }
+</script>
 
 <%- include("partials/footer.ejs") %>

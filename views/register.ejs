@@ -21,7 +21,7 @@
     <input type="date" id="birthdate" name="birthdate" required><br><br>
 
 
-    <input type="submit" value="Register" />
+    <input type="submit" value="Register a User" />
 </form>
 
 <script> 
@@ -31,10 +31,5 @@ heightSlider.addEventListener('input', function() {
     heightValue.textContent = heightSlider.value; 
 }); 
 </script>
-
-
-<% if (locals.confirmRegistration) { %>
-    <h2><%= confirmRegistration %></h2>
-<% } %>
 
 <%- include("partials/footer.ejs") %>
