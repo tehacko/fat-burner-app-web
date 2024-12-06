@@ -4,11 +4,13 @@
     <div class="header">
         <h1>Fat Burner</h1>
         <!-- Drop Down Widget -->
+         <!-- Change this so that only one page is generated and the user data does not change
+          the URL -->
         <div class="dropdown">
             <select id="userSelect" name="userId" onchange="navigateToUserPage()" required>
                 <option value="" disabled selected>Choose User</option>
                 <% userData.forEach(user => { %>
-                    <option value="/loggedinpage?userId=<%= user.id %>"><%= user.userName %></option>
+                    <option value="/loggedinpage?userId=<%= user.id %>"><%= user.username %></option>
                 <% }) %>
             </select>
         </div>
