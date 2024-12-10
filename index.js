@@ -2,7 +2,8 @@ import express from "express";
 import bodyParser from "body-parser";
 import pg from "pg";
 
-const db = new pg.Client({
+const { Pool } = pg;
+const db = new pg.Pool({
   user: "postgres",
   host: "localhost",
   database: "fat_burner_db",
@@ -13,12 +14,16 @@ const db = new pg.Client({
 const app = express();
 const port = 3000;
 
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static("public"));
+// const URL_API = ...
+
+let heading;
 var users_db_data = [];
+
 async function loadAllDBData() {
   try {
-    db.connect();
     const result = await db.query('SELECT * FROM users');
-    db.end();
     return result.rows;
   } catch (err) {
     console.error('Error fetching data:', err);
@@ -26,15 +31,8 @@ async function loadAllDBData() {
   }
 }
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static("public"));
-// const URL_API = ...
-
-let heading;
-
 app.get("/", async (req, res) => {
   users_db_data = await loadAllDBData();
-  console.log(users_db_data);
   res.render("index.ejs", {
     confirmRegistration: heading,
     userData: users_db_data,
@@ -60,29 +58,62 @@ app.get("/register", (req, res) => {
   res.render("register.ejs")
 });
 
-app.post("/submit", (req, res) => {
-  // Saving form data in USERS list
-  const { username, sex, height, birthdate } = req.body;
-  // Add a new user to the array
-  const newUser = {
-    id: users_db_data.length + 1, // Incremental ID
-    username: username,
-    sex: sex,
-    height: height,
-    birthdate: birthdate,
-  };
-  users_db_data.push(newUser);
-  heading = `${username}, you have been
-       successfully temporarily registered!`;
+app.post("/submit", async (req, res) => {
+  // Check if the username is unique & less than 25 characters
+  const desiredUsername = req.body["username"];
+  const existingUser = users_db_data.find(
+    user => user.username === desiredUsername
+  );
+  if (existingUser) {
+    console.log("Username is already taken, try a different one.");
+    return res.render("index.ejs", {
+    confirmRegistration: null,
+    userData: users_db_data,
+    error: "Username is already taken, try a different one." 
+  });
+  } 
+  // Check if the username is less than 25 characters 
+  if (desiredUsername.length > 25) {
+    console.log("Username must be less than 25 characters.");
+    return res.render("index.ejs", {
+      confirmRegistration: null,
+      userData: users_db_data,
+      error: "Username must be less than 25 characters." 
+    }); 
+  }
+  // Database data insertion
+  try {
+    const result = await db.query(
+      'INSERT INTO users (id, username, sex, height, birthdate) VALUES ($1, $2, $3, $4, $5)',
+          [users_db_data.length + 1,
+            desiredUsername,
+            req.body.sex,
+            req.body.height,
+            req.body.birthdate
+          ]
+        ); 
+    heading = `${desiredUsername}, you have been
+       successfully registered!`;
+  } catch (err) {
+    console.error('Error inserting data:', err);
+   }
   res.redirect("/");
-  console.log(users_db_data[users_db_data.length-1]);
-  // 3. create a DB for the purpose
-  // 4. write the data to DB
-  // 5. say "${username}, you have been
-  //     successfully registered."
+  console.log(users_db_data[users_db_data.length]);
+
+  // // Saving form data in USERS list
+  // const { username, sex, height, birthdate } = req.body;
+  // // Add a new user to the array
+  // const newUser = {
+  //   id: users_db_data.length + 1, // Incremental ID
+  //   username: username,
+  //   sex: sex,
+  //   height: height,
+  //   birthdate: birthdate,
+  // };
+  // users_db_data.push(newUser);
+  // heading = `${username}, you have been
+  //      successfully temporarily registered!`;
 });
-
-
 
 
 // PUT method here (replace user data)
