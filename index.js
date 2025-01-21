@@ -3,6 +3,10 @@ import bodyParser from "body-parser";
 import express from "express";
 import pg from "pg";
 
+const app = express();
+const port = 3000;
+const saltRounds = 10;
+
 const { Pool } = pg;
 const db = new pg.Pool({
   user: "postgres",
@@ -11,9 +15,6 @@ const db = new pg.Pool({
   password: "123456",
   port: 5432,
 });
-
-const app = express();
-const port = 3000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
@@ -38,10 +39,6 @@ app.get("/", async (req, res) => {
     confirmRegistration: heading,
     userData: users_db_data,
   });
-});
-
-app.get("/login", (req, res) => {
-  res.render("login.ejs")
 });
 
 app.get("/loggedinpage", (req, res) => {
@@ -119,15 +116,6 @@ app.post("/register", async (req, res) => {
   // users_db_data.push(newUser);
   // heading = `${username}, you have been
   //      successfully temporarily registered!`;
-});
-
-app.post("/login", async (req, res) => {
-  const username = req.body.username
-  const password = req.body.password
-  
-  const result = await db.query()
-  console.log(username);
-  console.log(password);
 });
 
 // PUT method here (replace user data)
