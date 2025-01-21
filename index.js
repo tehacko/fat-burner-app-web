@@ -1,5 +1,6 @@
-import express from "express";
+import bcrypt from "bcrypt";
 import bodyParser from "body-parser";
+import express from "express";
 import pg from "pg";
 
 const { Pool } = pg;
@@ -39,6 +40,10 @@ app.get("/", async (req, res) => {
   });
 });
 
+app.get("/login", (req, res) => {
+  res.render("login.ejs")
+});
+
 app.get("/loggedinpage", (req, res) => {
   // Get the selected user ID
   const userId = parseInt(req.query.userId); 
@@ -58,7 +63,8 @@ app.get("/register", (req, res) => {
   res.render("register.ejs")
 });
 
-app.post("/submit", async (req, res) => {
+
+app.post("/register", async (req, res) => {
   // Check if the username is unique & less than 25 characters
   const desiredUsername = req.body["username"];
   const existingUser = users_db_data.find(
@@ -115,6 +121,14 @@ app.post("/submit", async (req, res) => {
   //      successfully temporarily registered!`;
 });
 
+app.post("/login", async (req, res) => {
+  const username = req.body.username
+  const password = req.body.password
+  
+  const result = await db.query()
+  console.log(username);
+  console.log(password);
+});
 
 // PUT method here (replace user data)
   // 1. logic
