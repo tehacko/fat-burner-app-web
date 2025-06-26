@@ -1,3 +1,3 @@
-## Fat Burner Web App - Minimalist Version
+# Fat Burner Web App - Minimalist Version
 
-A very simple Fat Burner Web App interface
+A very simple Fat Burner Web App interface using SQLite
